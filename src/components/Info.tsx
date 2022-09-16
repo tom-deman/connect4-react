@@ -12,7 +12,7 @@ const Info = ( { player }: IProps ): JSX.Element => {
     }, [ player ] )
 
     return(
-        <div className = { color }>
+        <div className = { `${ color } text-lg mt-6` }>
             { player ? 'Joueur 2' : 'Joueur 1' }
         </div>
     )

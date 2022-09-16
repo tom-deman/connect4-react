@@ -85,6 +85,8 @@ const Grid = ( {
         }
 
         setPlayer()
+
+        console.log( selected )
     }
 
     const findCircle = ( element: string ): select => {
@@ -98,8 +100,8 @@ const Grid = ( {
                 cols.map( ( col: number, indexCol: number ) =>
                     <Fragment key = { indexRow + indexCol }>
                         <Circle
-                            id          = { ( +( indexRow.toString() + indexCol.toString() ) + 1 ).toString() }
-                            pressCircle = { ( id ) => pressCircle( id )                                       }
+                            id          = { ( +( indexRow.toString() + indexCol.toString() ) + 1 ).toString()                      }
+                            pressCircle = { ( id ) => pressCircle( id )                                                            }
                             color       = { findCircle( ( +( indexRow.toString() + indexCol.toString() ) + 1 ).toString() )?.color }
                         />
                     </Fragment>
