@@ -24,14 +24,10 @@ const Circle = ( {
             className = { `${ color } mx-4 rounded-full` }
             onClick   = { () => pressCircle( id )        }
             style     = { {
-                width : windowWidth / 18,
-                height: windowWidth / 18
+                width : windowWidth / 16,
+                height: windowWidth / 16
             } }
-        >
-            <p className = 'text-white'>
-                { id }
-            </p>
-        </div>
+        />
     )
 }
 

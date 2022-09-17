@@ -1,13 +1,18 @@
 import {
     Fragment,
-    useState
+    useState,
+    useEffect
 } from 'react'
 
 import Circle from './Circle'
 
+import { wins } from '../assets/ts/wins'
+
 interface GProps {
     player      : boolean,
-    setPlayer   : () => void
+    setPlayer   : () => void,
+    win         : string,
+    setWin      : ( el:string ) => void
 }
 
 interface select {
@@ -17,7 +22,9 @@ interface select {
 
 const Grid = ( {
     player,
-    setPlayer
+    setPlayer,
+    win,
+    setWin
 }:GProps ): JSX.Element => {
 
     const [ selected, setSelected ] = useState< Array< select > >( [] )
@@ -53,7 +60,28 @@ const Grid = ( {
         else                                           fillSelect( id )
     }
 
+    const findCircle = ( element: string ): select => {
+        const index = selected.findIndex( el => el.id === element )
+        return selected[ index ]
+    }
+
+    const findWin = (
+        winArray      : number[][],
+        playerOneArray: number  [],
+        playerTwoArray: number  []
+    ) =>
+        winArray.map( ( el, index: number ) => {
+            if( winArray[ index ].every( element => playerOneArray.includes( element ) ) ) {
+                setWin( 'Player one' )
+            }
+            else if( winArray[ index ].every( element => playerTwoArray.includes( element ) ) ) {
+                setWin( 'Player two' )
+            }
+        } )
+
     const pressCircle = ( id: string ): void => {
+        if( win ) return
+
         let selectedCol = +id > 10 ? id[ 1 ] : id[ 0 ] ?? undefined
 
         if( selected.find( el => el.id === id ) ) return
@@ -85,14 +113,20 @@ const Grid = ( {
         }
 
         setPlayer()
-
-        console.log( selected )
     }
 
-    const findCircle = ( element: string ): select => {
-        const index = selected.findIndex( el => el.id === element )
-        return selected[ index ]
-    }
+    useEffect( () => {
+        const playerOne = selected
+            .filter( el => el.color === 'bg-teal-700'   )
+            .map   ( el => +el.id                       )
+            .sort  ( ( a, b ) => a - b                  )
+
+        const playerTwo = selected
+            .filter( el => el.color === 'bg-yellow-700' )
+            .map   ( el => +el.id                       )
+            .sort  ( ( a, b ) => a - b                  )
+        findWin( wins, playerOne, playerTwo )
+    }, [ selected ] )
 
     return(
         <>
