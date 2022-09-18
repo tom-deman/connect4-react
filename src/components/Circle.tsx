@@ -1,4 +1,7 @@
-import { useEffect, useState } from 'react'
+import {
+    useEffect,
+    useState
+} from 'react'
 
 interface CProps {
     id         : string,
@@ -11,21 +14,45 @@ const Circle = ( {
     pressCircle,
     color = 'bg-slate-600'
 }: CProps ): JSX.Element => {
-    const [ windowWidth, setWindowWidth ] = useState< number >( window.innerWidth )
+    const [ circlewidth, setCircleWidth ] = useState< number >( window.innerWidth )
+
+    const setGridSize = () => {
+        const width = window.innerWidth
+
+        if     ( width > 1400                 ) {
+            setCircleWidth( width / 16 )
+        }
+        else if( width < 1400 && width > 1050 ) {
+            setCircleWidth( width / 18 )
+        }
+        else if( width < 1050 && width > 900  ) {
+            setCircleWidth( width / 16 )
+        }
+        else if( width < 900 && width > 650   ) {
+            setCircleWidth( width / 12 )
+        }
+        else if( width < 650 && width > 450   ) {
+            setCircleWidth( width / 14 )
+        }
+        else {
+            setCircleWidth( width / 28 )
+        }
+    }
 
     useEffect( () => {
         window.addEventListener( 'resize', () => {
-            setWindowWidth( window.innerWidth )
+            setGridSize()
         } )
-    } )
+        setGridSize()
+    }, [] )
 
     return (
         <div
             className = { `${ color } mx-4 rounded-full` }
             onClick   = { () => pressCircle( id )        }
             style     = { {
-                width : windowWidth / 16,
-                height: windowWidth / 16
+                width : circlewidth,
+                height: circlewidth
             } }
         />
     )

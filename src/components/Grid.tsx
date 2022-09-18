@@ -9,10 +9,10 @@ import Circle from './Circle'
 import { wins } from '../assets/ts/wins'
 
 interface GProps {
-    player      : boolean,
-    setPlayer   : () => void,
-    win         : string,
-    setWin      : ( el:string ) => void
+    player   : boolean,
+    win      : string,
+    setPlayer: ()            => void,
+    setWin   : ( el:string ) => void
 }
 
 interface select {
@@ -70,14 +70,14 @@ const Grid = ( {
         playerOneArray: number  [],
         playerTwoArray: number  []
     ) =>
-        winArray.map( ( el, index: number ) => {
+        winArray.forEach( ( el, index: number ) => {
             if( winArray[ index ].every( element => playerOneArray.includes( element ) ) ) {
                 setWin( 'Player one' )
             }
             else if( winArray[ index ].every( element => playerTwoArray.includes( element ) ) ) {
                 setWin( 'Player two' )
             }
-        } )
+        })
 
     const pressCircle = ( id: string ): void => {
         if( win ) return
