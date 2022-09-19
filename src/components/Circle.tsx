@@ -34,8 +34,11 @@ const Circle = ( {
         else if( width < 650 && width > 450   ) {
             setCircleWidth( width / 14 )
         }
-        else {
+        else if( width < 450 && width > 380 ) {
             setCircleWidth( width / 28 )
+        }
+        else{
+            setCircleWidth( width / 32 )
         }
     }
 
